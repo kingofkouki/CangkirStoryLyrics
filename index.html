@@ -1,0 +1,151 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title id="pageTitle">Cangkir Story Lyric</title>
+    <link rel="stylesheet" href="style.css">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="manifest" href="manifest.json">
+    <meta name="theme-color" content="#181a1e">
+</head>
+<body class="dark-theme">
+
+    <div id="bgOverlay" class="bg-overlay"></div>
+
+    <div class="app-container">
+        <!-- Header / Nav Bar -->
+        <header class="app-header">
+            <button id="showInputToggle" class="neu-btn" title="Input Musik & Lirik">☰</button>
+            <div class="header-title">PLAYING NOW</div>
+            <div class="header-actions">
+                <button id="themeToggle" class="neu-btn theme-switch" title="Ganti Tema">
+                    <span class="knob"></span>
+                </button>
+            </div>
+        </header>
+
+        <!-- Main Dashboard Neumorphism -->
+        <main class="main-player-wrapper">
+            <section id="mainCard" class="neu-player-card">
+                
+                <!-- Album Art / Visualizer Box -->
+                <div class="neu-album-box neu-inset">
+                    <canvas id="rgbVisualizer"></canvas>
+                </div>
+
+                <!-- Info Lagu & Artis -->
+                <div class="song-meta-box">
+                    <h2 id="songTitle">Perfect Day</h2>
+                    <p id="artistName">The Weekend</p>
+                </div>
+
+                <!-- Progress Bar Slider -->
+                <div class="progress-container">
+                    <div class="time-label" id="currentTimeLabel">01:24</div>
+                    <div class="slider-wrapper">
+                        <input type="range" id="songProgress" min="0" max="100" value="35">
+                    </div>
+                    <div class="time-label" id="durationLabel">03:56</div>
+                </div>
+
+                <!-- Kontrol Utama (Play/Pause Orange & Skip) -->
+                <div class="player-controls">
+                    <button class="neu-btn control-sm" title="Shuffle">🔀</button>
+                    <button class="neu-btn control-md" id="prevBtn" title="Sebelumnya">⏮</button>
+                    <button class="neu-btn control-lg active-orange" id="playPauseBtn" title="Play/Pause">⏸</button>
+                    <button class="neu-btn control-md" id="nextBtn" title="Selanjutnya">⏭</button>
+                    <button class="neu-btn control-sm" title="Repeat">🔁</button>
+                </div>
+
+                <!-- Panel Lirik (Collapsible/Scrollable) -->
+                <div class="lyrics-section neu-inset">
+                    <div class="lyrics-header">
+                        <span>🎵 Lyrics</span>
+                        <button id="settingsToggle" class="neu-btn-text">⚙️ Settings</button>
+                    </div>
+                    <div class="lyrics-box" id="lyricsBox">
+                        <div class="line active" data-time="0">I'm gonna find my way</div>
+                        <div class="line" data-time="5">Through the darkest night</div>
+                        <div class="line" data-time="10">And into the light</div>
+                        <div class="line" data-time="15">Cause I believe in you...</div>
+                    </div>
+                </div>
+
+                <!-- Hidden Media Element -->
+                <div style="display:none;">
+                    <video id="audioPlayer" crossorigin="anonymous">
+                        <source id="audioSource" src="" type="video/mp4">
+                    </video>
+                </div>
+            </section>
+        </main>
+
+        <!-- Footer -->
+        <footer class="app-footer">
+            <p id="footerText">&copy; 2026 Cangkir Story</p>
+        </footer>
+    </div>
+
+    <!-- Modal Input Musik & Lirik -->
+    <div id="inputModal" class="modal-overlay">
+        <div class="modal-card neu-card">
+            <div class="modal-header">
+                <h3>🎵 Input Media & Lirik</h3>
+                <button id="closeInputModalBtn" class="neu-btn">&times;</button>
+            </div>
+            
+            <div class="form-group">
+                <label for="audioInput">Upload File Media (.mp3, .mp4)</label>
+                <input type="file" id="audioInput" accept="audio/*,video/mp4">
+            </div>
+
+            <div class="form-group">
+                <label for="titleInput">Judul Lagu</label>
+                <input type="text" id="titleInput" placeholder="Perfect Day">
+            </div>
+
+            <div class="form-group">
+                <label for="artistInput">Nama Artis</label>
+                <input type="text" id="artistInput" placeholder="The Weekend">
+            </div>
+
+            <div class="form-group">
+                <label for="lrcInput">Format Lirik ([detik.milidetik] Teks)</label>
+                <textarea id="lrcInput" rows="5" placeholder="[00.00] Baris lirik..."></textarea>
+            </div>
+
+            <button id="loadLyricsBtn" class="neu-action-btn">Muat Lirik & Media</button>
+        </div>
+    </div>
+
+    <!-- Modal Pengaturan -->
+    <div id="settingsModal" class="modal-overlay">
+        <div class="modal-card neu-card">
+            <div class="modal-header">
+                <h3>⚙️ Pengaturan</h3>
+                <button id="closeSettingsModalBtn" class="neu-btn">&times;</button>
+            </div>
+            
+            <div class="form-group">
+                <label for="appNameInput">Nama Aplikasi</label>
+                <input type="text" id="appNameInput" value="Cangkir Story">
+            </div>
+
+            <div class="form-group">
+                <label for="bgImageInput">Upload Background Gambar</label>
+                <input type="file" id="bgImageInput" accept="image/*">
+            </div>
+
+            <div class="form-group">
+                <label for="footerTextInput">Teks Footer</label>
+                <input type="text" id="footerTextInput" value="&copy; 2026 Cangkir Story">
+            </div>
+
+            <button id="saveSettingsBtn" class="neu-action-btn">Simpan Pengaturan</button>
+        </div>
+    </div>
+
+    <script src="script.js"></script>
+</body>
+</html>
