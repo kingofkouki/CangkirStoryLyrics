@@ -15,6 +15,12 @@ const songProgress = document.getElementById('songProgress');
 const currentTimeLabel = document.getElementById('currentTimeLabel');
 const durationLabel = document.getElementById('durationLabel');
 
+// Tombol Shuffle & Repeat
+const shuffleBtn = document.getElementById('shuffleBtn');
+const repeatBtn = document.getElementById('repeatBtn');
+const prevBtn = document.getElementById('prevBtn');
+const nextBtn = document.getElementById('nextBtn');
+
 const showInputToggle = document.getElementById('showInputToggle');
 const inputModal = document.getElementById('inputModal');
 const closeInputModalBtn = document.getElementById('closeInputModalBtn');
@@ -23,10 +29,8 @@ const settingsToggle = document.getElementById('settingsToggle');
 const settingsModal = document.getElementById('settingsModal');
 const closeSettingsModalBtn = document.getElementById('closeSettingsModalBtn');
 const saveSettingsBtn = document.getElementById('saveSettingsBtn');
+const resetBgBtn = document.getElementById('resetBgBtn');
 
-const appNameInput = document.getElementById('appNameInput');
-const brandName = document.getElementById('brandName'); // jika ada
-const pageTitle = document.getElementById('pageTitle');
 const bgImageInput = document.getElementById('bgImageInput');
 const bgOverlay = document.getElementById('bgOverlay');
 const footerTextInput = document.getElementById('footerTextInput');
@@ -37,6 +41,10 @@ const canvas = document.getElementById('rgbVisualizer');
 const ctx = canvas.getContext('2d');
 let audioCtx, analyser, sourceNode, isAudioInitialized = false;
 let parsedLyrics = [];
+
+// Status Player State
+let isShuffleActive = false;
+let isRepeatActive = false;
 
 const defaultLrc = `[00.00] I'm gonna find my way
 [05.00] Through the darkest night
@@ -82,7 +90,7 @@ function drawVisualizer() {
     if (analyser && !audioPlayer.paused) {
         analyser.getByteFrequencyData(dataArray);
     } else {
-        dataArray.fill(12);
+        dataArray.fill(10);
     }
 
     ctx.clearRect(0, 0, canvas.width, canvas.height);
@@ -91,9 +99,7 @@ function drawVisualizer() {
 
     for (let i = 0; i < bufferLength; i++) {
         let barHeight = (dataArray[i] / 255) * canvas.height * 0.85;
-        
-        // Warna batang oranye menyala ala referensi
-        ctx.fillStyle = i % 2 === 0 ? '#ff7b00' : '#4a5568';
+        ctx.fillStyle = i % 2 === 0 ? '#ff7b00' : '#718096';
         
         let radius = 4;
         let yPos = canvas.height - barHeight - 4;
@@ -154,6 +160,31 @@ playPauseBtn.addEventListener('click', () => {
     } else {
         audioPlayer.pause();
         playPauseBtn.textContent = '▶';
+    }
+});
+
+// Fungsionalitas Tombol Shuffle (Acak)
+shuffleBtn.addEventListener('click', () => {
+    isShuffleActive = !isShuffleActive;
+    shuffleBtn.classList.toggle('active-state', isShuffleActive);
+    // Jika shuffle aktif, beri notifikasi kecil atau efek acak waktu pemutaran (opsional)
+});
+
+// Fungsionalitas Tombol Repeat (Ulangi)
+repeatBtn.addEventListener('click', () => {
+    isRepeatActive = !isRepeatActive;
+    repeatBtn.classList.toggle('active-state', isRepeatActive);
+    audioPlayer.loop = isRepeatActive;
+});
+
+// Tombol Skip Prev / Next (Kembali ke awal atau restart lagu)
+prevBtn.addEventListener('click', () => {
+    audioPlayer.currentTime = 0;
+});
+
+nextBtn.addEventListener('click', () => {
+    if (!isNaN(audioPlayer.duration)) {
+        audioPlayer.currentTime = audioPlayer.duration;
     }
 });
 
@@ -225,4 +256,11 @@ saveSettingsBtn.addEventListener('click', () => {
     }
     footerText.textContent = footerTextInput.value;
     settingsModal.classList.remove('active');
+});
+
+// Reset Background
+resetBgBtn.addEventListener('click', () => {
+    bgOverlay.style.backgroundImage = 'none';
+    bgImageInput.value = '';
+    alert('Background berhasil direset!');
 });
