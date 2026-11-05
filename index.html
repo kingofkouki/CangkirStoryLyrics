@@ -17,7 +17,7 @@
         <!-- Header / Nav Bar -->
         <header class="app-header">
             <button id="showInputToggle" class="neu-btn" title="Input Musik & Lirik">☰</button>
-            <div class="header-title">PLAYING NOW</div>
+            <div class="header-title">STORY LYRIC MODE</div>
             <div class="header-actions">
                 <button id="themeToggle" class="neu-btn theme-switch" title="Ganti Tema">
                     <span class="knob"></span>
@@ -48,17 +48,17 @@
                     </div>
                     <div class="time-label" id="durationLabel">03:56</div>
                 </div>
-
-                <!-- Kontrol Utama (Play/Pause Orange & Skip) -->
+				
+				<!-- Kontrol Utama Minimalis -->
                 <div class="player-controls">
-                    <button class="neu-btn control-sm" title="Shuffle">🔀</button>
+                    <button class="neu-btn control-sm" id="shuffleBtn" title="Shuffle">⇄</button>
                     <button class="neu-btn control-md" id="prevBtn" title="Sebelumnya">⏮</button>
                     <button class="neu-btn control-lg active-orange" id="playPauseBtn" title="Play/Pause">⏸</button>
                     <button class="neu-btn control-md" id="nextBtn" title="Selanjutnya">⏭</button>
-                    <button class="neu-btn control-sm" title="Repeat">🔁</button>
+                    <button class="neu-btn control-sm" id="repeatBtn" title="Repeat">↻</button>
                 </div>
-
-                <!-- Panel Lirik (Collapsible/Scrollable) -->
+                
+				<!-- Panel Lirik -->
                 <div class="lyrics-section neu-inset">
                     <div class="lyrics-header">
                         <span>🎵 Lyrics</span>
@@ -123,7 +123,7 @@
     <div id="settingsModal" class="modal-overlay">
         <div class="modal-card neu-card">
             <div class="modal-header">
-                <h3>⚙️ Pengaturan</h3>
+                <h3>⚙️ Pengaturan Story</h3>
                 <button id="closeSettingsModalBtn" class="neu-btn">&times;</button>
             </div>
             
@@ -135,6 +135,10 @@
             <div class="form-group">
                 <label for="bgImageInput">Upload Background Gambar</label>
                 <input type="file" id="bgImageInput" accept="image/*">
+            </div>
+
+            <div class="form-group">
+                <button id="resetBgBtn" class="neu-action-btn secondary-btn">Reset Background</button>
             </div>
 
             <div class="form-group">
